@@ -2,6 +2,9 @@ const express = require('express');
 const db = require('./config/db.config');
 const cors = require('cors');
 
+//import rutas
+const bookRoutes = require('./routes/Book.routes');
+
 
 db.connect();
 
@@ -21,7 +24,7 @@ app.use(express.urlencoded({extended:true}));
 
 
 app.use("/",router);
-
+app.use("/book",bookRoutes);
 
 router.get('/',(req,res,next) => {
     res.status(200).json("Express funcionando correctamente");
