@@ -37,9 +37,9 @@ app.use('*',(req,res,next) => {
 });
 
 //error treatment
-app.use((error, req, res) => {
+app.use((error,req,res,next) => {
     return res.status(error.status || 500).json(error.message || 'Unexpected error');
-});
+})
 
 app.listen(PORT,() => {
     console.log(`Server ejecutando en http://localhost:${PORT}`);
