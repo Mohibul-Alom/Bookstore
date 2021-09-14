@@ -4,6 +4,7 @@ const cors = require('cors');
 
 //import rutas
 const bookRoutes = require('./routes/Book.routes');
+const authorRoutes = require('./routes/Author.routes');
 
 
 db.connect();
@@ -25,6 +26,7 @@ app.use(express.urlencoded({extended:true}));
 
 app.use("/",router);
 app.use("/book",bookRoutes);
+app.use("/author",authorRoutes);
 
 router.get('/',(req,res,next) => {
     res.status(200).json("Express funcionando correctamente");
