@@ -1,10 +1,14 @@
 import './App.scss';
 
+import { ChakraProvider } from "@chakra-ui/react"
+
+import {Home} from './pages/'
+
 function App() {
   return (
-    <div className="App">
-       <h1>Hola mundo</h1>
-    </div>
+    <ChakraProvider>
+      <Home/>
+    </ChakraProvider>
   );
 }
 
