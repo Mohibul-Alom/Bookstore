@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Header } from "../../sections";
-import { getBooks } from "../../../api/book.api";
+import { getBooks,deleteBooks } from "../../../api/book.api";
 
 import {
     Flex,
@@ -31,6 +31,21 @@ function HomeLayout() {
             });
     }, []);
 
+    const reqDelete = (id) =>{
+
+        const book = {
+            id
+        }
+
+            deleteBooks(book)
+                .then((result) => {
+                    console.log("Eliminado correctamente");
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+    }
+
     return (
         <>
             <Header />
@@ -41,7 +56,7 @@ function HomeLayout() {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Stack direction={{ base: "column" }} w="full" shadow="dark-lg">
+                <Stack direction={{ base: "column" }} w="50" shadow="dark-lg">
                     <SimpleGrid
                         spacingY={3}
                         columns={{ base: 1, md: 4 }}
@@ -53,9 +68,8 @@ function HomeLayout() {
                         fontWeight="hairline"
                         display="table-header-group"
                     >
-                        {/* <span mt="2">Books Name</span> */}
                         <Heading as="h3" size="lg">
-                            Books
+                            Books List
                         </Heading>
                     </SimpleGrid>
 
@@ -86,6 +100,9 @@ function HomeLayout() {
                                                     colorScheme="red"
                                                     variant="outline"
                                                     icon={<BsFillTrashFill />}
+                                                    onClick={(e)=>{
+                                                        reqDelete(book._id)
+                                                    }}
                                                 />
                                             </ButtonGroup>
                                         </Flex>

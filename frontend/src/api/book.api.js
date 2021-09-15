@@ -28,6 +28,31 @@ const getBooks = async() => {
 
 }
 
+
+const deleteBooks = async(form) => {
+    try {
+
+        const req = await fetch(bookDELETE, {
+            method: "DELETE",
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(form)
+        });
+    
+        const res = await req.json();
+
+        return res;
+        
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 export  {
     getBooks,
+    deleteBooks
 }
