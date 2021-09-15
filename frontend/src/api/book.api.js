@@ -66,6 +66,24 @@ const postBook = async(form) => {
 
 }
 
+const editBook = async(form) => {
+    try {
+        
+        const req = await fetch(bookPUT, {
+            method: "PUT",
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(form)
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 const deleteBooks = async(form) => {
     try {
@@ -94,5 +112,6 @@ export  {
     getBooks,
     getBookById,
     postBook,
+    editBook,
     deleteBooks
 }

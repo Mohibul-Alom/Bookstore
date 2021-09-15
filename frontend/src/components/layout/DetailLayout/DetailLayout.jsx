@@ -93,7 +93,7 @@ function DetailLayout() {
                                 }
                                 {exists === false &&
                                     <Td>
-                                        <AddModal form={INITIAL_AUTHOR} />
+                                        <AddModal form={INITIAL_AUTHOR} bookId={book._id} />
                                     </Td>
                                 }
 

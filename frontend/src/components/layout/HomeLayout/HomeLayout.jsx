@@ -77,7 +77,7 @@ function HomeLayout() {
 
     const reqAdd = (e) => {
 
-        if(state.name !== "" || state.isbn !== ""){
+        if(state.name !== "" && state.isbn !== ""){
             postBook(state)
             .then(() => {
                 onClose();

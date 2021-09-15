@@ -42,6 +42,9 @@ const postAuthor = async(form) => {
             body: JSON.stringify(form)
         })
 
+        const res = await req.json();
+        return res;
+
     } catch (error) {
         console.log(error);
     }
