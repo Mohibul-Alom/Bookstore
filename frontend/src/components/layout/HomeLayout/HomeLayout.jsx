@@ -1,4 +1,4 @@
-import React, { useState, useEffect,componentDidUpdate } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Header } from "../../sections";
 import { getBooks,postBook, deleteBooks } from "../../../api/book.api";
@@ -23,7 +23,8 @@ import {
     FormLabel,
     Input,
     ModalFooter,
-    Button
+    Button,
+    Link,
 
 } from "@chakra-ui/react";
 import { AiFillEdit } from "react-icons/ai";
@@ -44,8 +45,8 @@ function HomeLayout() {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const initialRef = React.useRef()
-    const finalRef = React.useRef()
+    const initialRef = React.useRef();
+    const finalRef = React.useRef();
 
     useEffect(() => {
         (async () => {
@@ -53,7 +54,7 @@ function HomeLayout() {
           setBooks(data);
           setChange(false);
         })()
-      }, [change])
+      }, [change]);
 
     const reqDelete = (id,name) => {
 
@@ -61,19 +62,12 @@ function HomeLayout() {
         console.log(id)
 
         deleteBooks(book)
-            .then((result) => {
-                console.log("Eliminado correctamente-->",name);
-                const deletedBook = books.filter(book => book._id === id);
-                // const index = books.indexOf(deletedBook);
-                books.splice(books.indexOf(deletedBook),1);
-                console.log(books);
-                setBooks(books);
+            .then(() => {
                 setChange(true);
             })
             .catch((err) => {
                 console.log(err)
             })
-        
     }
 
     const inputChange = (e) => {
@@ -85,8 +79,7 @@ function HomeLayout() {
 
         if(state.name !== "" || state.isbn !== ""){
             postBook(state)
-            .then((result) => {
-                console.log("Añadido correctamente");
+            .then(() => {
                 onClose();
                 setState(INITIAL_STATE);
                 setChange(true);
@@ -267,10 +260,14 @@ function HomeLayout() {
 
                                         <Flex justify={{ md: "end" }}>
                                             <ButtonGroup variant="solid" size="sm" spacing={3}>
-                                                <IconButton
-                                                    colorScheme="blue"
-                                                    icon={<BsBoxArrowUpRight />}
-                                                />
+
+                                                <Link href={`/book/${book._id}`}>
+                                                        <IconButton
+                                                            colorScheme="blue"
+                                                            icon={<BsBoxArrowUpRight />}
+                                                        />
+                                                </Link>
+
                                                 <IconButton colorScheme="green" icon={<AiFillEdit />} />
                                                 <IconButton
                                                     colorScheme="red"

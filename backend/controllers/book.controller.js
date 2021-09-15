@@ -19,6 +19,19 @@ const bookGet = async(req,res,next) => {
     }
 };
 
+const bookGetById = async(req, res, next) => {
+    try {
+        const {id} = req.params;
+        const book = await Book.findById(id);
+
+        res.status(200).json(book);
+
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+}
+
 const bookPost = async(req,res,next) => {
     try {
         const {name, isbn} = req.body;
@@ -78,6 +91,7 @@ const bookDelete = async(req,res,next) => {
 
 module.exports =  {
     bookGet,
+    bookGetById,
     bookPost,
     bookPut,
     bookDelete,    

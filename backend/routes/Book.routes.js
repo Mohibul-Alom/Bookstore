@@ -11,5 +11,6 @@ router.put('/edit',controller.bookPut);
 
 router.delete('/delete',controller.bookDelete);
 
+router.get('/:id',controller.bookGetById);
 
 module.exports = router;

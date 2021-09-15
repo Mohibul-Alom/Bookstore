@@ -27,6 +27,25 @@ const getBooks = async() => {
 
 }
 
+const getBookById = async (id) =>{
+    try {
+        const req = await fetch(`${bookGET}/${id}`, {
+            method: "GET",
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            },
+        });
+    
+        const res = await req.json();
+        return res;
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 const postBook = async(form) => {
 
     try {
@@ -73,6 +92,7 @@ const deleteBooks = async(form) => {
 
 export  {
     getBooks,
+    getBookById,
     postBook,
     deleteBooks
 }
