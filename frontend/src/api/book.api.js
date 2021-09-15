@@ -19,7 +19,6 @@ const getBooks = async() => {
         });
     
         const res = await req.json();
-
         return res;
 
     } catch (error) {

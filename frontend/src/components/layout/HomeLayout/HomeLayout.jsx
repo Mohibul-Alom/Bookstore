@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,componentDidUpdate } from "react";
 
 import { Header } from "../../sections";
 import { getBooks,postBook, deleteBooks } from "../../../api/book.api";
@@ -31,6 +31,7 @@ import { BsBoxArrowUpRight, BsFillTrashFill, BsPlus } from "react-icons/bs";
 
 
 const INITIAL_STATE = {
+    _id: "",
     name: "",
     isbn: ""
 }
@@ -38,8 +39,8 @@ const INITIAL_STATE = {
 
 function HomeLayout() {
     const [books, setBooks] = useState([]);
-
     const [state, setState] = useState(INITIAL_STATE);
+    const [change,setChange] = useState(false);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -47,26 +48,32 @@ function HomeLayout() {
     const finalRef = React.useRef()
 
     useEffect(() => {
-        getBooks()
-            .then((result) => {
-                setBooks(result);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [books]);
+        (async () => {
+          const data = await getBooks()
+          setBooks(data);
+          setChange(false);
+        })()
+      }, [change])
 
-    const reqDelete = (id) => {
+    const reqDelete = (id,name) => {
 
         const book = { id }
+        console.log(id)
 
         deleteBooks(book)
             .then((result) => {
-                console.log("Eliminado correctamente");
+                console.log("Eliminado correctamente-->",name);
+                const deletedBook = books.filter(book => book._id === id);
+                // const index = books.indexOf(deletedBook);
+                books.splice(books.indexOf(deletedBook),1);
+                console.log(books);
+                setBooks(books);
+                setChange(true);
             })
             .catch((err) => {
                 console.log(err)
             })
+        
     }
 
     const inputChange = (e) => {
@@ -82,7 +89,7 @@ function HomeLayout() {
                 console.log("Añadido correctamente");
                 onClose();
                 setState(INITIAL_STATE);
-
+                setChange(true);
             })
             .catch(err => console.log(err));
         } 
@@ -244,8 +251,8 @@ function HomeLayout() {
 
                     {books.map((book) => {
                         return (
-                            <>
-                                <Flex direction={{ base: "row", xxs: "column" }} key={book._id}>
+                            <div key={book._id}>
+                                <Flex direction={{ base: "row", xxs: "column" }}>
                                     <SimpleGrid
                                         spacingY={3}
                                         columns={{ base: 3, md: 4 }}
@@ -270,7 +277,7 @@ function HomeLayout() {
                                                     variant="outline"
                                                     icon={<BsFillTrashFill />}
                                                     onClick={(e) => {
-                                                        reqDelete(book._id)
+                                                        reqDelete(book._id, book.name)
                                                     }}
                                                 />
                                             </ButtonGroup>
@@ -278,7 +285,7 @@ function HomeLayout() {
                                     </SimpleGrid>
                                 </Flex>
                                 <Divider />
-                            </>
+                            </div>
                         );
                     })}
                 </Stack>
