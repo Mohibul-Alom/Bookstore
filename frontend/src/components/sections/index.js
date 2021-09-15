@@ -1,9 +1,9 @@
 import Header from "./Header/Header";
+import AddModal from "./Modal/AddModal";
 
 
 
-export {
-    
+export { 
     Header,
-
+    AddModal,
 }

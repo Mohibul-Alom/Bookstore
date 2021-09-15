@@ -5,11 +5,11 @@ const bookGet = async(req,res,next) => {
         
         const books = await Book.find();
 
-        if(!books.length){
-            const error = new Error("Coleccion de libros vacia");
-            error.status = 404;
-            throw error;
-        }
+        // if(!books.length){
+        //     const error = new Error("Coleccion de libros vacia");
+        //     error.status = 404;
+        //     throw error;
+        // }
 
         res.status(200).json(books);
 
