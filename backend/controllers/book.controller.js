@@ -22,7 +22,7 @@ const bookGet = async(req,res,next) => {
 const bookGetById = async(req, res, next) => {
     try {
         const {id} = req.params;
-        const book = await Book.findById(id);
+        const book = await Book.findById(id).populate("author");
 
         res.status(200).json(book);
 

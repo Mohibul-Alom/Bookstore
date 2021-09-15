@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { getBookById } from '../../../api/book.api'
 import { useLocation } from 'react-router-dom';
 
+
+import { Header,EditModal } from "../../sections";
+
 import {
     Flex,
     Box,
@@ -13,18 +16,30 @@ import {
     Tbody
 }from "@chakra-ui/react"
 
+const INITIAL_AUTHOR = {
+    firstName: "",
+    lastName: "",
+}
+
+
 function DetailLayout() {
 
     const location = useLocation();
     const divitions = location.pathname.split("/", 3);
     const bookId = divitions[2];
     const [book, setBook] = useState({});
+    const [author,setAuthor] = useState(INITIAL_AUTHOR);
+    const [exists, setExists] = useState(false);
 
     useEffect(() => {
         getBookById(bookId)
             .then(data => {
-                console.log(data);
+                if(data.author){
+                    setExists(true);
+                    setAuthor(data.author);
+                }
                 setBook(data);
+                
             })
             .catch(err => {
                 console.log(err);
@@ -32,25 +47,46 @@ function DetailLayout() {
     }, [])
 
     return (
-        <Flex justifyContent="center" alignItems="center"  >
-            <Box w="50%">
-                <Table size="sm">
-                    <Thead>
-                        <Tr>
-                            <Th>Title</Th>
-                            <Th>ISBN</Th>
-                            <Th>Author</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        <Tr>
-                            <Td>{book.name}</Td>
-                            <Td>{book.isbn}</Td>
-                        </Tr>
-                    </Tbody>
-                </Table>
-            </Box>
-        </Flex>
+        <>
+            <Header />
+            <Flex justifyContent="center" alignItems="center" mt="5">
+                <Box w="lg">
+                    <Table size="m">
+                        <Thead>
+                            <Tr>
+                                <Th fontSize="l">Title</Th>
+                                <Th fontSize="l">ISBN</Th>
+                                <Th fontSize="l">Author</Th>
+                                <Th fontSize="l"></Th>
+
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            <Tr>
+                                <Td fontSize="l">{book.name}</Td>
+                                <Td fontSize="l">{book.isbn}</Td>
+                                {exists===true &&
+                                        <>
+                                        <Td fontSize="l">
+                                            {author.firstName} {author.lastName}
+                                        </Td>
+                                        <Td>
+                                            <EditModal form={author}/> 
+                                        </Td>
+                                        </>
+                                }
+                                {exists===false &&
+                                        <Td>
+                                            <EditModal/> 
+                                        </Td>
+                                }
+                                
+                            </Tr>
+                        </Tbody>
+                    </Table>
+                </Box>
+            </Flex>
+        </>
     )
 }
 

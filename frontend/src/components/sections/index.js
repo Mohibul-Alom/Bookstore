@@ -1,9 +1,9 @@
 import Header from "./Header/Header";
-import AddModal from "./Modal/AddModal";
+import EditModal from "./Modal/EditModal";
 
 
 
 export { 
     Header,
-    AddModal,
+    EditModal,
 }
