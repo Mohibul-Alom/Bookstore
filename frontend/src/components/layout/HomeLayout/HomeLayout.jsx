@@ -59,7 +59,6 @@ function HomeLayout() {
     const reqDelete = (id,name) => {
 
         const book = { id }
-        console.log(id)
 
         deleteBooks(book)
             .then(() => {

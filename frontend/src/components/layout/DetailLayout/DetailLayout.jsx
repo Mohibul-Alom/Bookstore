@@ -21,6 +21,8 @@ import {
 
 import { BsFillTrashFill } from "react-icons/bs";
 
+import {deleteAuthor} from "../../../api/author.api"
+
 const INITIAL_AUTHOR = {
     firstName: "",
     lastName: "",
@@ -39,7 +41,6 @@ function DetailLayout() {
 
 
     useEffect(() => {
-        console.log("Holaa???",change);
         getBookById(bookId)
             .then(data => {
                 if (data.author) {
@@ -54,6 +55,16 @@ function DetailLayout() {
                 console.log(err);
             })
     }, [change])
+
+
+    const reqDeleteAuthor = (id) => {
+        const author = {id};
+        deleteAuthor(author)
+            .then(() => {
+                setExists(false);
+            })
+            .catch(err => console.log(err));
+    }
 
     return (
         <>
@@ -89,6 +100,9 @@ function DetailLayout() {
                                                     colorScheme="red"
                                                     variant="outline"
                                                     icon={<BsFillTrashFill />}
+                                                    onClick={(e)=>{
+                                                        reqDeleteAuthor(author._id);
+                                                    }}
                                                 />
 
                                             </ButtonGroup>
