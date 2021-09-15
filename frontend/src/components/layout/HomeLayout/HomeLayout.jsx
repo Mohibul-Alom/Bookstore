@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Header } from "../../sections";
-import { getBooks, deleteBooks } from "../../../api/book.api";
+import { getBooks,postBook, deleteBooks } from "../../../api/book.api";
 
 import {
     Flex,
@@ -29,8 +29,17 @@ import {
 import { AiFillEdit } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill, BsPlus } from "react-icons/bs";
 
+
+const INITIAL_STATE = {
+    name: "",
+    isbn: ""
+}
+
+
 function HomeLayout() {
     const [books, setBooks] = useState([]);
+
+    const [state, setState] = useState(INITIAL_STATE);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -60,8 +69,24 @@ function HomeLayout() {
             })
     }
 
+    const inputChange = (e) => {
+        const { name, value } = e.target;
+        setState({...state,[name]:value});
+    }
+
     const reqAdd = (e) => {
-        return console.log("Hola")
+
+        if(state.name !== "" || state.isbn !== ""){
+            postBook(state)
+            .then((result) => {
+                console.log("Añadido correctamente");
+                onClose();
+                setState(INITIAL_STATE);
+
+            })
+            .catch(err => console.log(err));
+        } 
+
     }
 
     if (books.length === 0) {
@@ -113,12 +138,12 @@ function HomeLayout() {
                                             <ModalBody pb={6}>
                                                 <FormControl>
                                                     <FormLabel>TITULO</FormLabel>
-                                                    <Input ref={initialRef} placeholder="La cuenta atrás para el verano" />
+                                                    <Input name="name" value={state.name} ref={initialRef} placeholder="La cuenta atrás para el verano" onChange={inputChange} />
                                                 </FormControl>
 
                                                 <FormControl mt={4}>
                                                     <FormLabel>ISBN</FormLabel>
-                                                    <Input placeholder="9788448028831" />
+                                                    <Input name="isbn" value={state.isbn} placeholder="9788448028831" onChange={inputChange}/>
                                                 </FormControl>
                                             </ModalBody>
 
@@ -167,11 +192,52 @@ function HomeLayout() {
                         display="table-header-group"
                     >
                         <Flex direction={{ base: "row", xxs: "column" }}>
-                            <Heading as="h3" size="lg">
-                                List
-                            </Heading>
-                            <Spacer />
-                            <IconButton colorScheme="orange" icon={<BsPlus />} />
+                        <Box mr="4">
+                                    <Heading as="h3" size="lg">
+                                        List
+                                    </Heading>
+                                </Box>
+
+                            <Box>
+                            <IconButton
+                                        mt="1"
+                                        size="sm"
+                                        colorScheme="orange"
+                                        icon={<BsPlus />}
+                                        onClick={onOpen} />
+
+                                    <Modal
+                                        initialFocusRef={initialRef}
+                                        finalFocusRef={finalRef}
+                                        isOpen={isOpen}
+                                        onClose={onClose}
+                                    >
+
+                                        <ModalContent>
+                                            <ModalHeader>Create Book</ModalHeader>
+                                            <ModalCloseButton />
+                                            <ModalBody pb={6}>
+                                                <FormControl>
+                                                    <FormLabel>TITULO</FormLabel>
+                                                    <Input name="name" value={state.name} ref={initialRef} placeholder="La cuenta atrás para el verano" onChange={inputChange} />
+                                                </FormControl>
+
+                                                <FormControl mt={4}>
+                                                    <FormLabel>ISBN</FormLabel>
+                                                    <Input name="isbn" value={state.isbn} placeholder="9788448028831" onChange={inputChange}/>
+                                                </FormControl>
+                                            </ModalBody>
+
+                                            <ModalFooter>
+                                                <Button onClick={(e)=>{reqAdd(e)}} colorScheme="blue" mr={3}>
+                                                    Save
+                                                </Button>
+                                                <Button onClick={onClose}>Cancel</Button>
+                                            </ModalFooter>
+                                        </ModalContent>
+
+                                    </Modal>
+                            </Box>
                         </Flex>
 
                     </SimpleGrid>

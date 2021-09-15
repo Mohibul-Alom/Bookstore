@@ -28,6 +28,26 @@ const getBooks = async() => {
 
 }
 
+const postBook = async(form) => {
+
+    try {
+        
+        const req = await fetch(bookPOST, {
+            method: "POST",
+            headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(form)
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 
 const deleteBooks = async(form) => {
     try {
@@ -54,5 +74,6 @@ const deleteBooks = async(form) => {
 
 export  {
     getBooks,
+    postBook,
     deleteBooks
 }
