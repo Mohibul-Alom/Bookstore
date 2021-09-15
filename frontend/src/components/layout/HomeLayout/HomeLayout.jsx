@@ -16,7 +16,7 @@ import {
     IconButton,
 } from "@chakra-ui/react";
 import { AiFillEdit } from "react-icons/ai";
-import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
+import { BsBoxArrowUpRight, BsFillTrashFill,BsPlus } from "react-icons/bs";
 
 function HomeLayout() {
     const [books, setBooks] = useState([]);
@@ -33,9 +33,7 @@ function HomeLayout() {
 
     const reqDelete = (id) =>{
 
-        const book = {
-            id
-        }
+        const book = {id}
 
             deleteBooks(book)
                 .then((result) => {
@@ -59,7 +57,7 @@ function HomeLayout() {
                 <Stack direction={{ base: "column" }} w="50" shadow="dark-lg">
                     <SimpleGrid
                         spacingY={3}
-                        columns={{ base: 1, md: 4 }}
+                        columns={{ base: 2, md: 4 }}
                         w={{ base: 120, md: "full" }}
                         textTransform="uppercase"
                         py={{ base: 1, md: 4 }}
@@ -68,9 +66,14 @@ function HomeLayout() {
                         fontWeight="hairline"
                         display="table-header-group"
                     >
-                        <Heading as="h3" size="lg">
-                            Books List
-                        </Heading>
+                        <Flex direction={{ base: "row", xxs: "column" }}>
+                            <Heading as="h3" size="lg">
+                                Books List
+                            </Heading>
+                            <Spacer />
+                            <IconButton colorScheme="orange" icon={<BsPlus />} />
+                        </Flex>
+
                     </SimpleGrid>
 
                     {books.map((book) => {
