@@ -47,6 +47,8 @@ function AddModal(props) {
 
     const addAuthor = (e) => {
 
+        props.setChange(false);
+
         if(state[0] !== "" && state[1] !== "" ){
             postAuthor(state)
             .then((data) =>{
@@ -55,11 +57,13 @@ function AddModal(props) {
                 updateBook.author = data._id;
                 console.log(updateBook);
                 editBook(updateBook).catch(err => {throw err});
+                props.setChange(true);
                 onClose();
 
             })
             .catch(err => console.log(err))
         }
+        props.setChange(false);
 
     }
 

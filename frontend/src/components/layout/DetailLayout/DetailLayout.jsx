@@ -35,8 +35,11 @@ function DetailLayout() {
     const [book, setBook] = useState({});
     const [author, setAuthor] = useState(INITIAL_AUTHOR);
     const [exists, setExists] = useState(false);
+    const [change,setChange] = useState(false);
+
 
     useEffect(() => {
+        console.log("Holaa???",change);
         getBookById(bookId)
             .then(data => {
                 if (data.author) {
@@ -44,12 +47,13 @@ function DetailLayout() {
                     setAuthor(data.author);
                 }
                 setBook(data);
+                setChange(false);
 
             })
             .catch(err => {
                 console.log(err);
             })
-    }, [])
+    }, [change])
 
     return (
         <>
@@ -93,7 +97,7 @@ function DetailLayout() {
                                 }
                                 {exists === false &&
                                     <Td>
-                                        <AddModal form={INITIAL_AUTHOR} bookId={book._id} />
+                                        <AddModal change={change} setChange={setChange} form={INITIAL_AUTHOR} bookId={book._id} />
                                     </Td>
                                 }
 
