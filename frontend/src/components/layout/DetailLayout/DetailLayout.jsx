@@ -3,7 +3,7 @@ import { getBookById } from '../../../api/book.api'
 import { useLocation } from 'react-router-dom';
 
 
-import { Header,EditModal } from "../../sections";
+import { Header,EditModal,AddModal } from "../../sections";
 
 import {
     Flex,
@@ -77,7 +77,7 @@ function DetailLayout() {
                                 }
                                 {exists===false &&
                                         <Td>
-                                            <EditModal/> 
+                                            <AddModal form={INITIAL_AUTHOR}/> 
                                         </Td>
                                 }
                                 
