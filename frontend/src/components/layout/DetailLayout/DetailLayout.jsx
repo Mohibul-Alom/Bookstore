@@ -3,7 +3,7 @@ import { getBookById } from '../../../api/book.api'
 import { useLocation } from 'react-router-dom';
 
 
-import { Header,EditModal,AddModal } from "../../sections";
+import { Header, EditModal, AddModal } from "../../sections";
 
 import {
     Flex,
@@ -13,8 +13,13 @@ import {
     Td,
     Tr,
     Th,
-    Tbody
-}from "@chakra-ui/react"
+    Tbody,
+    ButtonGroup,
+    IconButton
+
+} from "@chakra-ui/react";
+
+import { BsFillTrashFill } from "react-icons/bs";
 
 const INITIAL_AUTHOR = {
     firstName: "",
@@ -28,18 +33,18 @@ function DetailLayout() {
     const divitions = location.pathname.split("/", 3);
     const bookId = divitions[2];
     const [book, setBook] = useState({});
-    const [author,setAuthor] = useState(INITIAL_AUTHOR);
+    const [author, setAuthor] = useState(INITIAL_AUTHOR);
     const [exists, setExists] = useState(false);
 
     useEffect(() => {
         getBookById(bookId)
             .then(data => {
-                if(data.author){
+                if (data.author) {
                     setExists(true);
                     setAuthor(data.author);
                 }
                 setBook(data);
-                
+
             })
             .catch(err => {
                 console.log(err);
@@ -58,29 +63,40 @@ function DetailLayout() {
                                 <Th fontSize="l">ISBN</Th>
                                 <Th fontSize="l">Author</Th>
                                 <Th fontSize="l"></Th>
-
                             </Tr>
                         </Thead>
                         <Tbody>
                             <Tr>
                                 <Td fontSize="l">{book.name}</Td>
                                 <Td fontSize="l">{book.isbn}</Td>
-                                {exists===true &&
-                                        <>
+                                {exists === true &&
+                                    <>
                                         <Td fontSize="l">
                                             {author.firstName} {author.lastName}
                                         </Td>
                                         <Td>
-                                            <EditModal form={author}/> 
+                                            <ButtonGroup variant="solid" size="sm" spacing={3}>
+
+                                                <EditModal form={author} />
+
+                                                <IconButton
+                                                    mt="2px"
+                                                    size="xs"
+                                                    colorScheme="red"
+                                                    variant="outline"
+                                                    icon={<BsFillTrashFill />}
+                                                />
+
+                                            </ButtonGroup>
                                         </Td>
-                                        </>
+                                    </>
                                 }
-                                {exists===false &&
-                                        <Td>
-                                            <AddModal form={INITIAL_AUTHOR}/> 
-                                        </Td>
+                                {exists === false &&
+                                    <Td>
+                                        <AddModal form={INITIAL_AUTHOR} />
+                                    </Td>
                                 }
-                                
+
                             </Tr>
                         </Tbody>
                     </Table>
