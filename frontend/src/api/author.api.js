@@ -55,7 +55,7 @@ const putAuthor = async(form) => {
     
     try {
         const req = await fetch(authorPUT, {
-            method: "POST",
+            method: "PUT",
             headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -63,6 +63,9 @@ const putAuthor = async(form) => {
             },
             body: JSON.stringify(form)
         })
+
+        const res = await req.json();
+        return res;
 
     } catch (error) {
         console.log(error);

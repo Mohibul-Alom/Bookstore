@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
     useDisclosure,
@@ -55,7 +55,6 @@ function AddModal(props) {
                 const updateBook = {};
                 updateBook.id = props.bookId;
                 updateBook.author = data._id;
-                console.log(updateBook);
                 editBook(updateBook).catch(err => {throw err});
                 props.setChange(true);
                 onClose();

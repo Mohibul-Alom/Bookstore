@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 
 import {
     useDisclosure,
@@ -17,7 +17,8 @@ import {
 } from "@chakra-ui/react";
 
 import { AiFillEdit } from "react-icons/ai";
-import { BsPlus, BsFillTrashFill } from "react-icons/bs";
+
+import {putAuthor} from "../../../api/author.api"
 
 function EditModal(props) {
 
@@ -32,6 +33,34 @@ function EditModal(props) {
     for (const key in props.form) {
         field.push(key);
         text.push(props.form[key]);
+    }
+
+    const id = props.form._id;
+
+
+    const [state,setState] = useState(props.form);
+
+
+    const inputChange = (e) => {
+
+        const { name, value } = e.target;
+        setState({...state,[name]:value});
+
+    }
+
+    const editAuthor = (e) => {
+        props.setChange(false);
+        const {firstName,lastName} = state;
+        const updateAuthor = {id,firstName,lastName};
+
+
+        putAuthor(updateAuthor)
+            .then((res) =>{
+                props.setChange(true);
+                onClose();  
+            })
+            .catch(err => console.log(err))
+
     }
 
     return (
@@ -57,17 +86,17 @@ function EditModal(props) {
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel textTransform="uppercase">{field[1]}</FormLabel>
-                            <Input name="name"  ref={initialRef} placeholder={text[1]} />
+                            <Input name={field[1]} value={state[1]} onChange={inputChange} ref={initialRef} placeholder={text[1]} />
                         </FormControl>
 
                         <FormControl mt={4}>
                             <FormLabel textTransform="uppercase">{field[2]}</FormLabel>
-                            <Input name="isbn" placeholder={text[2]} />
+                            <Input name={field[2]} value={state[2]} onChange={inputChange} placeholder={text[2]} />
                         </FormControl>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="blue" mr={3}>
+                        <Button onClick={(e)=>{editAuthor(e)}} colorScheme="blue" mr={3}>
                             Save
                         </Button>
                         <Button onClick={onClose}>Cancel</Button>

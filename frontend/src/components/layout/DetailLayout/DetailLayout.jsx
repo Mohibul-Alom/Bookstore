@@ -92,7 +92,7 @@ function DetailLayout() {
                                         <Td>
                                             <ButtonGroup variant="solid" size="sm" spacing={3}>
 
-                                                <EditModal form={author} />
+                                                <EditModal change={change} setChange={setChange} form={author}/>
 
                                                 <IconButton
                                                     mt="2px"
