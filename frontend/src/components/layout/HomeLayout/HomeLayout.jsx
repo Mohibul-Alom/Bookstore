@@ -4,6 +4,7 @@ import { Header,EditModal } from "../../sections";
 import { getBooks,postBook, deleteBooks, editBook } from "../../../api/book.api";
 
 import {
+    Text,
     Flex,
     Spacer,
     Modal,
@@ -126,7 +127,7 @@ function HomeLayout() {
 
                             <Flex direction={{ base: "row", xxs: "column" }} w="full">
                                 <Box mr="4">
-                                    <Heading as="h3" size="lg">
+                                    <Heading as="h3" size="lg" color="white">
                                         List
                                     </Heading>
                                 </Box>
@@ -184,13 +185,13 @@ function HomeLayout() {
     }
 
     return (
-        <>
+        <Box bg="gray.800" h="100vh">
             <Header />
             <Flex
+                
                 w="full"
                 bg="gray.800"
                 p={50}
-                alignItems="center"
                 justifyContent="center"
             >
                 <Stack direction={{ base: "column" }} w="50" shadow="dark-lg">
@@ -207,7 +208,7 @@ function HomeLayout() {
                     >
                         <Flex direction={{ base: "row", xxs: "column" }}>
                         <Box mr="4">
-                                    <Heading as="h3" size="lg">
+                                    <Heading as="h3" size="lg" color="white">
                                         List
                                     </Heading>
                                 </Box>
@@ -268,7 +269,7 @@ function HomeLayout() {
                                         px={12}
                                         fontWeight="hairline"
                                     >
-                                        <span>{book.name}</span>
+                                        <Text color="white">{book.name}</Text>
                                         <Spacer />
                                         <Spacer />
 
@@ -302,7 +303,7 @@ function HomeLayout() {
                     })}
                 </Stack>
             </Flex>
-        </>
+        </Box>
     );
 }
 
