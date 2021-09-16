@@ -38,29 +38,33 @@ function EditModal(props) {
     const id = props.form._id;
 
 
-    const [state,setState] = useState(props.form);
+    const [myState,setMyState] = useState(props.form);
 
 
     const inputChange = (e) => {
 
         const { name, value } = e.target;
-        setState({...state,[name]:value});
+        setMyState({...myState,[name]:value});
 
     }
 
     const editAuthor = (e) => {
-        props.setChange(false);
-        const {firstName,lastName} = state;
-        const updateAuthor = {id,firstName,lastName};
+        onClose();
+        props.setState(myState);
+        props.setEdit(true);
+
+        // props.setChange(false);
+
+        // const {firstName,lastName} = state;
+        // const updateAuthor = {id,firstName,lastName};
 
 
-        putAuthor(updateAuthor)
-            .then((res) =>{
-                props.setChange(true);
-                onClose();  
-            })
-            .catch(err => console.log(err))
-
+        // putAuthor(updateAuthor)
+        //     .then((res) =>{
+        //         props.setChange(true);
+        //         onClose();  
+        //     })
+        //     .catch(err => console.log(err))
     }
 
     return (
@@ -86,12 +90,12 @@ function EditModal(props) {
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel textTransform="uppercase">{field[1]}</FormLabel>
-                            <Input name={field[1]} value={state[1]} onChange={inputChange} ref={initialRef} placeholder={text[1]} />
+                            <Input name={field[1]} value={myState[1]} onChange={inputChange} ref={initialRef} placeholder={text[1]} />
                         </FormControl>
 
                         <FormControl mt={4}>
                             <FormLabel textTransform="uppercase">{field[2]}</FormLabel>
-                            <Input name={field[2]} value={state[2]} onChange={inputChange} placeholder={text[2]} />
+                            <Input name={field[2]} value={myState[2]} onChange={inputChange} placeholder={text[2]} />
                         </FormControl>
                     </ModalBody>
 

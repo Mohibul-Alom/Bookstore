@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { Header } from "../../sections";
-import { getBooks,postBook, deleteBooks } from "../../../api/book.api";
+import { Header,EditModal } from "../../sections";
+import { getBooks,postBook, deleteBooks, editBook } from "../../../api/book.api";
 
 import {
     Flex,
@@ -42,19 +42,31 @@ function HomeLayout() {
     const [books, setBooks] = useState([]);
     const [state, setState] = useState(INITIAL_STATE);
     const [change,setChange] = useState(false);
+    const [edit,setEdit] = useState(false);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const initialRef = React.useRef();
     const finalRef = React.useRef();
 
-    useEffect(() => {
-        (async () => {
-          const data = await getBooks()
-          setBooks(data);
-          setChange(false);
-        })()
+     useEffect(() => {
+            (async () => {
+                const data = await getBooks()
+                setBooks(data);
+                setChange(false);
+              })() 
       }, [change]);
+
+      useEffect(() => {
+        const {_id,name,isbn} = state;
+        const updateBook = {id:_id,name,isbn};
+        (async () => {
+            const data = await editBook(updateBook);
+            setEdit(false);
+          })()
+          setChange(true);
+      },[edit]);
+
 
     const reqDelete = (id,name) => {
 
@@ -200,7 +212,7 @@ function HomeLayout() {
                             <Box>
                             <IconButton
                                         mt="1"
-                                        size="sm"
+                                        size="xs"
                                         colorScheme="orange"
                                         icon={<BsPlus />}
                                         onClick={onOpen} />
@@ -258,7 +270,7 @@ function HomeLayout() {
                                         <Spacer />
 
                                         <Flex justify={{ md: "end" }}>
-                                            <ButtonGroup variant="solid" size="sm" spacing={3}>
+                                            <ButtonGroup variant="solid" size="xs" spacing={3}>
 
                                                 <Link href={`/book/${book._id}`}>
                                                         <IconButton
@@ -266,11 +278,12 @@ function HomeLayout() {
                                                             icon={<BsBoxArrowUpRight />}
                                                         />
                                                 </Link>
-
-                                                <IconButton colorScheme="green" icon={<AiFillEdit />} />
+                                                <EditModal edit={edit} setEdit={setEdit} form={book} state={state} setState={setState} />
+                                                {/* <IconButton colorScheme="green" icon={<AiFillEdit />} /> */}
                                                 <IconButton
                                                     colorScheme="red"
                                                     variant="outline"
+                                                    mt="2px"
                                                     icon={<BsFillTrashFill />}
                                                     onClick={(e) => {
                                                         reqDelete(book._id, book.name)
