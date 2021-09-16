@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link as ReachLink } from "react-router-dom";
 import { getBookById } from '../../../api/book.api'
 import { useLocation } from 'react-router-dom';
 
@@ -76,7 +77,7 @@ function DetailLayout() {
             <Center>
             <Flex justifyContent="center" alignItems="center" mt="5">
 
-                <Link href="/">
+                <Link  as={ReachLink} to="/">
                     <Button
                         mr="5"
                         _focus={{textDecoration:"none"}}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link as ReachLink } from "react-router-dom";
 
 import { Header,EditModal } from "../../sections";
 import { getBooks,postBook, deleteBooks, editBook } from "../../../api/book.api";
@@ -276,7 +277,7 @@ function HomeLayout() {
                                         <Flex justify={{ md: "end" }}>
                                             <ButtonGroup variant="solid" size="xs" spacing={3}>
 
-                                                <Link href={`/book/${book._id}`}>
+                                                <Link as={ReachLink} to={`/book/${book._id}`}>
                                                         <IconButton
                                                             colorScheme="blue"
                                                             icon={<BsBoxArrowUpRight />}
