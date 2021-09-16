@@ -133,6 +133,8 @@ function HomeLayout() {
 
                                 <Box>
                                     <IconButton
+                                        mt="2"
+                                        size="xs"
                                         colorScheme="orange"
                                         icon={<BsPlus />}
                                         onClick={onOpen} />
@@ -212,7 +214,7 @@ function HomeLayout() {
 
                             <Box>
                             <IconButton
-                                        mt="1"
+                                        mt="2"
                                         size="xs"
                                         colorScheme="orange"
                                         icon={<BsPlus />}

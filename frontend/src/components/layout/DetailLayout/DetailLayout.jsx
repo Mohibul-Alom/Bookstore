@@ -14,14 +14,17 @@ import {
     Tr,
     Th,
     Tbody,
+    Center,
     ButtonGroup,
-    IconButton
+    IconButton,
+    Button,
+    Link
 
 } from "@chakra-ui/react";
 
-import { BsFillTrashFill } from "react-icons/bs";
+import { BsFillTrashFill, BsHouseDoor } from "react-icons/bs";
 
-import {deleteAuthor} from "../../../api/author.api"
+import { deleteAuthor } from "../../../api/author.api"
 
 const INITIAL_AUTHOR = {
     firstName: "",
@@ -37,7 +40,7 @@ function DetailLayout() {
     const [book, setBook] = useState({});
     const [author, setAuthor] = useState(INITIAL_AUTHOR);
     const [exists, setExists] = useState(false);
-    const [change,setChange] = useState(false);
+    const [change, setChange] = useState(false);
 
 
     useEffect(() => {
@@ -54,11 +57,11 @@ function DetailLayout() {
             .catch(err => {
                 console.log(err);
             })
-    }, [change,bookId])
+    }, [change, bookId])
 
 
     const reqDeleteAuthor = (id) => {
-        const author = {id};
+        const author = { id };
         deleteAuthor(author)
             .then(() => {
                 setExists(false);
@@ -69,6 +72,27 @@ function DetailLayout() {
     return (
         <>
             <Header />
+
+            <Center>
+            <Flex justifyContent="center" alignItems="center" mt="5">
+
+                <Link href="/">
+                    <Button
+                        mr="5"
+                        _focus={{textDecoration:"none"}}
+                        size="xs"
+                        colorScheme="green"
+                        variant="outline"
+                        rightIcon={<BsHouseDoor />}
+                    >
+                        Back To Home
+                    </Button>
+                </Link>
+
+            </Flex>
+
+            </Center>
+
             <Flex justifyContent="center" alignItems="center" mt="5">
                 <Box w="lg">
                     <Table size="m">
@@ -92,7 +116,7 @@ function DetailLayout() {
                                         <Td>
                                             <ButtonGroup variant="solid" size="sm" spacing={3}>
 
-                                                <EditAuthor change={change} setChange={setChange} form={author}/>
+                                                <EditAuthor change={change} setChange={setChange} form={author} />
 
                                                 <IconButton
                                                     mt="2px"
@@ -100,7 +124,7 @@ function DetailLayout() {
                                                     colorScheme="red"
                                                     variant="outline"
                                                     icon={<BsFillTrashFill />}
-                                                    onClick={(e)=>{
+                                                    onClick={(e) => {
                                                         reqDeleteAuthor(author._id);
                                                     }}
                                                 />
