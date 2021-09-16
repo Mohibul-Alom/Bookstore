@@ -3,7 +3,7 @@ import { getBookById } from '../../../api/book.api'
 import { useLocation } from 'react-router-dom';
 
 
-import { Header, EditModal, AddModal } from "../../sections";
+import { Header, EditAuthor, AddModal } from "../../sections";
 
 import {
     Flex,
@@ -92,7 +92,7 @@ function DetailLayout() {
                                         <Td>
                                             <ButtonGroup variant="solid" size="sm" spacing={3}>
 
-                                                <EditModal change={change} setChange={setChange} form={author}/>
+                                                <EditAuthor change={change} setChange={setChange} form={author}/>
 
                                                 <IconButton
                                                     mt="2px"
