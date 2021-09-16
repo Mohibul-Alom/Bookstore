@@ -50,7 +50,7 @@ const postBook = async(form) => {
 
     try {
         
-        const req = await fetch(bookPOST, {
+        await fetch(bookPOST, {
             method: "POST",
             headers: {
             Accept: "application/json",
@@ -59,6 +59,7 @@ const postBook = async(form) => {
             },
             body: JSON.stringify(form)
         })
+        
 
     } catch (error) {
         console.log(error);

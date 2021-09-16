@@ -27,7 +27,6 @@ import {
     Link,
 
 } from "@chakra-ui/react";
-import { AiFillEdit } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill, BsPlus } from "react-icons/bs";
 
 
@@ -60,12 +59,14 @@ function HomeLayout() {
       useEffect(() => {
         const {_id,name,isbn} = state;
         const updateBook = {id:_id,name,isbn};
-        (async () => {
-            const data = await editBook(updateBook);
-            setEdit(false);
-          })()
-          setChange(true);
-      },[edit]);
+        if(_id !== ""){
+            (async () => {
+                await editBook(updateBook);
+                setEdit(false);
+              })()
+              setChange(true);
+        }
+      },[edit,state]);
 
 
     const reqDelete = (id,name) => {

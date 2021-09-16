@@ -18,7 +18,6 @@ import {
 
 import { AiFillEdit } from "react-icons/ai";
 
-import {putAuthor} from "../../../api/author.api"
 
 function EditModal(props) {
 
@@ -35,8 +34,6 @@ function EditModal(props) {
         text.push(props.form[key]);
     }
 
-    const id = props.form._id;
-
 
     const [myState,setMyState] = useState(props.form);
 
@@ -52,19 +49,6 @@ function EditModal(props) {
         onClose();
         props.setState(myState);
         props.setEdit(true);
-
-        // props.setChange(false);
-
-        // const {firstName,lastName} = state;
-        // const updateAuthor = {id,firstName,lastName};
-
-
-        // putAuthor(updateAuthor)
-        //     .then((res) =>{
-        //         props.setChange(true);
-        //         onClose();  
-        //     })
-        //     .catch(err => console.log(err))
     }
 
     return (

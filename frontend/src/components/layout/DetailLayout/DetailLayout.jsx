@@ -54,7 +54,7 @@ function DetailLayout() {
             .catch(err => {
                 console.log(err);
             })
-    }, [change])
+    }, [change,bookId])
 
 
     const reqDeleteAuthor = (id) => {
